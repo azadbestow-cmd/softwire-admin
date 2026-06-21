@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Softwire - Create Client Account</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel-dark: #131c2e;
+            --accent-blue: #00d2ff;
+            --text-light: #f1f5f9;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-dark); 
+            padding: 20px; 
+            margin: 0; 
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 420px; 
+            background: var(--panel-dark); 
+            padding: 25px; 
+            border-radius: 20px; 
+            box-shadow: 0px 15px 40px rgba(0,0,0,0.4); 
+            box-sizing: border-box; 
+            border: 1px solid rgba(0, 210, 255, 0.1); 
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .title { font-size: 18px; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff; }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            background: #090d16;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+            font-weight: 600;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-blue);
+            outline: none;
+        }
+
+        .action-btn { 
+            background: linear-gradient(135deg, #0052d4, #4364f7); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            font-size: 14px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            width: 100%; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(67, 100, 247, 0.2);
+            margin-top: 10px;
+        }
+
+        .action-btn:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2 class="title">Create Client Account</h2>
+    </div>
+
+    <!-- Client Data Input Form Fields -->
+    <div class="form-group">
+        <label>Client / Company Name</label>
+        <input type="text" id="clientNameInput" class="form-input" placeholder="e.g. SE Group" autocomplete="off">
+    </div>
+
+    <!-- Pure Functional Operational Trigger Button -->
+    <button class="action-btn" onclick="executeClientGenerationPipeline()">Generate Client ID</button>
+</div>
+
+<script>
+function executeClientGenerationPipeline() {
+    const nameField = document.getElementById("clientNameInput");
+    const clientName = nameField.value.trim();
+
+    if (!clientName) {
+        alert("Please enter a valid client name.");
+        return;
+    }
+
+    // Generate a unique dynamic corporate cryptographic token structure
+    const generatedToken = "CLIENT-TOKEN-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+    
+    // Create professional structured metadata packet object
+    const clientMetadataPacket = {
+        name: clientName,
+        token: generatedToken,
+        created_at: new Date().toISOString()
+    };
+
+    // 💾 SECURE LOCAL STORAGE ENGINE FOR OFFLINE SYNC MANAGEMENT
+    // Read existing database array cache records or initialize a fresh repository
+    let currentOfflineDatabase = JSON.parse(localStorage.getItem("SOFTWIRE_CLIENT_DATABASE")) || [];
+    currentOfflineDatabase.push(clientMetadataPacket);
+    
+    // Lock updated structural array safely into browser local hardware memory
+    localStorage.setItem("SOFTWIRE_CLIENT_DATABASE", JSON.stringify(currentOfflineDatabase));
+
+    // Register into the synchronization outbound queue ledger if device is offline
+    if (!navigator.onLine) {
+        let currentSyncQueue = JSON.parse(localStorage.getItem("SOFTWIRE_OFFLINE_QUEUE")) || [];
+        currentSyncQueue.push(clientMetadataPacket);
+        localStorage.setItem("SOFTWIRE_OFFLINE_QUEUE", JSON.stringify(currentSyncQueue));
+    }
+
+    alert(`Success: ${clientName} profile generated successfully in local data registry!`);
+    
+    // Clear field matrix and redirect administrator back to core system operations center
+    nameField.value = "";
+    window.location.href = "master-hub.html";
+}
+</script>
+</body>
+</html>
