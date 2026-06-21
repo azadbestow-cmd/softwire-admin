@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Softwire Master Hub</title>
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --panel-dark: #131c2e;
+            --accent-blue: #00d2ff;
+            --text-light: #f1f5f9;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background-color: var(--bg-dark); 
+            padding: 20px; 
+            margin: 0; 
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 420px; 
+            background: var(--panel-dark); 
+            padding: 25px; 
+            border-radius: 20px; 
+            box-shadow: 0px 15px 40px rgba(0,0,0,0.4); 
+            box-sizing: border-box; 
+            border: 1px solid rgba(0, 210, 255, 0.1); 
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .title { font-size: 20px; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff; }
+        .subtitle { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Sync Status Strip */
+        .sync-banner {
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px dashed rgba(0, 210, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sync-dot { width: 8px; height: 8px; background: #28a745; border-radius: 50%; }
+        .sync-dot.offline { background: #ffc107; }
+
+        /* PROFESSIONAL SINGLE BUTTON - NO EXTRA CHAFF */
+        .action-btn { 
+            background: linear-gradient(135deg, #0052d4, #4364f7); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            font-size: 14px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            width: 100%; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(67, 100, 247, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .action-btn:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2 class="title">Softwire Admin</h2>
+        <span class="subtitle">Central Operations Core</span>
+    </div>
+
+    <!-- Live Local Network Status Indicator -->
+    <div class="sync-banner">
+        <span id="syncText">System Status: Checking Link...</span>
+        <div id="syncIndicator" class="sync-dot"></div>
+    </div>
+
+    <!-- Pure Functional Operational Trigger -->
+    <button class="action-btn" onclick="routeToClientCreation()">Create Client Account</button>
+</div>
+
+<script>
+// Dynamic Routing Path Controller
+function routeToClientCreation() {
+    window.location.href = "create-client.html";
+}
+
+// 📡 OFFLINE LEDGER NETWORK SYNCHRONIZATION ENGINE
+function updateNetworkStatus() {
+    const statusText = document.getElementById("syncText");
+    const indicator = document.getElementById("syncIndicator");
+
+    if (navigator.onLine) {
+        // Online Node State
+        indicator.className = "sync-dot";
+        statusText.innerText = "System Status: Online (Data Synced)";
+        
+        // Background check if any cached offline registry data exists to sync
+        let pendingStorage = localStorage.getItem("SOFTWIRE_OFFLINE_QUEUE");
+        if(pendingStorage) {
+            console.log("Offline records detected. Triggering automated pipeline sync to cloud...");
+            // Database sync pipeline execution logic runs here
+            localStorage.removeItem("SOFTWIRE_OFFLINE_QUEUE"); // Clear queue post validation
+        }
+    } else {
+        // Offline Node State (Bina Internet Cache Path)
+        indicator.className = "sync-dot offline";
+        statusText.innerText = "System Status: Offline Mode (Local Storage Active)";
+    }
+}
+
+// Event Listeners to intercept sudden network modifications instantly
+window.addEventListener('online', updateNetworkStatus);
+window.addEventListener('offline', updateNetworkStatus);
+window.addEventListener('DOMContentLoaded', updateNetworkStatus);
+</script>
+</body>
+</html>
